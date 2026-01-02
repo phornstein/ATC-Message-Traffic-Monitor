@@ -1,0 +1,30 @@
+# Flask web framework
+Flask==3.0.0
+Werkzeug==3.0.1
+
+# Environment variables
+python-dotenv==1.0.0
+
+# Transformers for Wav2Vec2
+transformers==4.35.0
+
+# Elasticsearch client
+elasticsearch==8.11.1
+
+# Audio processing dependencies
+ffmpeg-python==0.2.0
+
+# HTTP requests
+requests==2.31.0
+
+# PyTorch and audio processing
+numpy==1.24.3
+torch==2.1.2
+torchaudio==2.1.2
+librosa==0.10.1
+
+# Logging
+python-json-logger==2.0.7
+
+# Numeric libraries
+numexpr==2.8.7

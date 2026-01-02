@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ATC Radar Display</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Courier New', monospace;
+            background-color: #1a1a1a;
+            color: #00ff00;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .container {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            grid-template-rows: auto 1fr;
+            height: 100vh;
+            gap: 2px;
+            padding: 2px;
+        }
+
+        .header {
+            grid-column: 1 / -1;
+            background-color: #2a2a2a;
+            padding: 15px;
+            border: 2px solid #00ff00;
+            box-shadow: 0 0 10px #00ff00;
+        }
+
+        .header h1 {
+            text-align: center;
+            font-size: 24px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            text-shadow: 0 0 10px #00ff00;
+        }
+
+        .status {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 10px;
+            font-size: 12px;
+        }
+
+        .status-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .status-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: #00ff00;
+            box-shadow: 0 0 5px #00ff00;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .map-container {
+            background-color: #2a2a2a;
+            border: 2px solid #00ff00;
+            position: relative;
+            overflow: hidden;
+            box-shadow: inset 0 0 20px rgba(0, 255, 0, 0.2);
+        }
+
+        #map {
+            height: 100%;
+            width: 100%;
+            background-color: #1a1a1a;
+        }
+
+        .messages-panel {
+            background-color: #2a2a2a;
+            border: 2px solid #00ff00;
+            display: flex;
+            flex-direction: column;
+            box-shadow: inset 0 0 20px rgba(0, 255, 0, 0.2);
+        }
+
+        .messages-header {
+            padding: 10px;
+            border-bottom: 2px solid #00ff00;
+            text-align: center;
+            font-size: 14px;
+            text-transform: uppercase;
+            background-color: #1a1a1a;
+        }
+
+        .search-container {
+            padding: 10px;
+            background-color: #1a1a1a;
+            border-bottom: 2px solid #00ff00;
+        }
+
+        .search-input {
+            width: 100%;
+            background-color: #2a2a2a;
+            border: 1px solid #00ff00;
+            color: #00ff00;
+            padding: 8px 12px;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            box-shadow: inset 0 0 5px rgba(0, 255, 0, 0.2);
+        }
+
+        .search-input:focus {
+            outline: none;
+            box-shadow: 0 0 10px #00ff00;
+        }
+
+        .search-input::placeholder {
+            color: #006600;
+        }
+
+        .time-controls {
+            padding: 10px;
+            background-color: #1a1a1a;
+            border-bottom: 2px solid #00ff00;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .time-slider-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .time-slider {
+            flex: 1;
+            -webkit-appearance: none;
+            appearance: none;
+            height: 6px;
+            background: #2a2a2a;
+            border: 1px solid #00ff00;
+            outline: none;
+        }
+
+        .time-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            background: #00ff00;
+            cursor: pointer;
+            border-radius: 50%;
+            box-shadow: 0 0 10px #00ff00;
+        }
+
+        .time-slider::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
+            background: #00ff00;
+            cursor: pointer;
+            border-radius: 50%;
+            box-shadow: 0 0 10px #00ff00;
+            border: none;
+        }
+
+        .time-display {
+            font-size: 11px;
+            color: #00aa00;
+            text-align: center;
+        }
+
+        .mode-controls {
+            display: flex;
+            gap: 5px;
+        }
+
+        .mode-btn {
+            flex: 1;
+            background-color: #2a2a2a;
+            border: 1px solid #00ff00;
+            color: #00ff00;
+            padding: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 11px;
+            cursor: pointer;
+            text-transform: uppercase;
+            transition: all 0.3s;
+        }
+
+        .mode-btn:hover {
+            background-color: #00ff00;
+            color: #1a1a1a;
+            box-shadow: 0 0 10px #00ff00;
+        }
+
+        .mode-btn.active {
+            background-color: #00ff00;
+            color: #1a1a1a;
+            font-weight: bold;
+        }
+
+        .mode-indicator {
+            text-align: center;
+            font-size: 10px;
+            padding: 5px;
+            background-color: rgba(0, 255, 0, 0.1);
+            border-radius: 3px;
+        }
+
+        .mode-indicator.live {
+            animation: pulse 2s infinite;
+        }
+
+        .messages-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 10px;
+            font-size: 12px;
+            line-height: 1.6;
+        }
+
+        .message-item {
+            margin-bottom: 15px;
+            padding: 10px;
+            background-color: rgba(0, 255, 0, 0.05);
+            border-left: 3px solid #00ff00;
+            animation: messageIn 0.3s ease-out;
+        }
+
+        @keyframes messageIn {
+            from {
+                opacity: 0;
+                transform: translateX(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .message-time {
+            color: #00aa00;
+            font-size: 10px;
+        }
+
+        .message-speaker {
+            color: #00ff00;
+            font-weight: bold;
+            margin-top: 5px;
+        }
+
+        .message-callsign {
+            color: #00cc00;
+        }
+
+        .message-text {
+            margin-top: 5px;
+            color: #00dd00;
+        }
+
+        .message-audio {
+            margin-top: 8px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .audio-btn {
+            background-color: rgba(0, 255, 0, 0.1);
+            border: 1px solid #00ff00;
+            color: #00ff00;
+            padding: 4px 10px;
+            font-family: 'Courier New', monospace;
+            font-size: 10px;
+            cursor: pointer;
+            text-transform: uppercase;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .audio-btn:hover {
+            background-color: #00ff00;
+            color: #1a1a1a;
+            box-shadow: 0 0 8px #00ff00;
+        }
+
+        .audio-btn:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        .audio-btn.playing {
+            background-color: #00ff00;
+            color: #1a1a1a;
+            animation: pulse 1s infinite;
+        }
+
+        /* Custom scrollbar */
+        .messages-content::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .messages-content::-webkit-scrollbar-track {
+            background: #1a1a1a;
+        }
+
+        .messages-content::-webkit-scrollbar-thumb {
+            background: #00ff00;
+            box-shadow: 0 0 5px #00ff00;
+        }
+
+        /* Leaflet overrides for radar theme */
+        .leaflet-container {
+            background-color: #1a1a1a !important;
+        }
+
+        .leaflet-popup-content-wrapper {
+            background-color: #2a2a2a;
+            color: #00ff00;
+            border: 1px solid #00ff00;
+            box-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
+        }
+
+        .leaflet-popup-tip {
+            background-color: #2a2a2a;
+        }
+
+        .leaflet-bar a {
+            background-color: #1a1a1a;
+            border-bottom: 1px solid #ccc;
+            width: 26px;
+            height: 26px;
+            line-height: 26px;
+            display: block;
+            text-align: center;
+            text-decoration: none;
+            color: #03ff00;
+            outline-color: #03ff00;
+            outline-width: thin;
+            outline-style: solid;
+        }
+
+        .aircraft-marker {
+            width: 30px;
+            height: 30px;
+            text-align: center;
+            line-height: 30px;
+            color: #00ff00;
+            font-size: 20px;
+            text-shadow: 0 0 5px #00ff00;
+        }
+
+        .tower-marker {
+            width: 40px;
+            height: 40px;
+            text-align: center;
+            line-height: 40px;
+            font-size: 30px;
+            text-shadow: 0 0 10px #00ff00;
+            animation: pulse 2s infinite;
+        }
+
+        .aircraft-popup {
+            font-family: 'Courier New', monospace;
+            font-size: 11px;
+        }
+
+        .aircraft-popup strong {
+            color: #00ff00;
+        }
+
+        .tower-popup {
+            font-family: 'Courier New', monospace;
+            font-size: 11px;
+        }
+
+        .tower-popup strong {
+            color: #00ff00;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>⬡ ATC Radar And Communications ⬡</h1>
+            <div class="status">
+                <div class="status-item">
+                    <div class="status-dot"></div>
+                    <span>TRACKING: <span id="aircraft-count">0</span> AIRCRAFT</span>
+                </div>
+                <div class="status-item">
+                    <div class="status-dot"></div>
+                    <span>MESSAGES: <span id="message-count">0</span></span>
+                </div>
+                <div class="status-item">
+                    <span id="last-update">LAST UPDATE: --:--:--</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="map-container">
+            <div id="map"></div>
+        </div>
+
+        <div class="messages-panel">
+            <div class="messages-header">
+                ⬢ ATC COMMUNICATIONS ⬢
+            </div>
+
+            <div class="search-container">
+                <input type="text"
+                       id="search-input"
+                       class="search-input"
+                       placeholder="SEMANTIC SEARCH (press Enter)...">
+            </div>
+
+            <div class="time-controls">
+                <div class="mode-controls">
+                    <button class="mode-btn active" id="live-btn">⬢ LIVE MODE</button>
+                    <button class="mode-btn" id="replay-btn">⬡ REPLAY MODE</button>
+                </div>
+
+                <div id="replay-controls" style="display: none;">
+                    <div class="time-slider-container">
+                        <input type="range"
+                               id="time-slider"
+                               class="time-slider"
+                               min="0"
+                               max="100"
+                               value="100">
+                    </div>
+                    <div class="time-display" id="time-display">
+                        SELECT TIME RANGE
+                    </div>
+                </div>
+
+                <div class="mode-indicator" id="mode-indicator">
+                    <span class="live">● LIVE TRACKING ACTIVE</span>
+                </div>
+            </div>
+
+            <div class="messages-content" id="messages">
+                <div style="text-align: center; padding: 20px; opacity: 0.5;">
+                    WAITING FOR TRANSMISSIONS...
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="/app.js"></script>
+</body>
+</html>

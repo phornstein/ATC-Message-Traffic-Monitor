@@ -1,0 +1,374 @@
+[
+  {
+    "start_time": "2026-01-01T19:15:00.307525",
+    "end_time": "2026-01-01T19:15:01.027525",
+    "speaker": "Unknown",
+    "callsign": null,
+    "message": "There's approach five.",
+    "audio_flile": "chunk_1.mp3",
+    "instructions": [],
+    "metadata": {
+      "model": "whisper-medium",
+      "processing_time": "2026-01-01T19:15:05.554485",
+      "segment_start": 0.0,
+      "segment_end": 0.72,
+      "stream_title": "KORF Gnd/Twr/App/Radar"
+    }
+  },
+  {
+    "start_time": "2026-01-01T19:15:39.296703",
+    "end_time": "2026-01-01T19:15:42.396703",
+    "speaker": "Aircraft",
+    "callsign": "Street 5682",
+    "message": "Blue Street 5682, Norfolk Airport, 11 o'clock, 5 miles.",
+    "audio_flile": "chunk_2.mp3",
+    "instructions": [],
+    "metadata": {
+      "model": "whisper-medium",
+      "processing_time": "2026-01-01T19:15:35.756929",
+      "segment_start": 8.72,
+      "segment_end": 11.82,
+      "stream_title": "KORF Gnd/Twr/App/Radar"
+    }
+  },
+  {
+    "start_time": "2026-01-01T19:15:44.676703",
+    "end_time": "2026-01-01T19:15:53.056703",
+    "speaker": "Aircraft",
+    "callsign": "Street 5682",
+    "message": "Blue Street 5682, Norfolk Airport, 11 o'clock, 5 miles.",
+    "audio_flile": "chunk_2.mp3",
+    "instructions": [],
+    "metadata": {
+      "model": "whisper-medium",
+      "processing_time": "2026-01-01T19:15:35.756991",
+      "segment_start": 14.1,
+      "segment_end": 22.48,
+      "stream_title": "KORF Gnd/Twr/App/Radar"
+    }
+  },
+  {
+    "start_time": "2026-01-01T19:15:59.974669",
+    "end_time": "2026-01-01T19:16:06.294669",
+    "speaker": "Tower",
+    "callsign": "tower 120",
+    "message": "Good, Vis approach runway 5 contact tower 120.8.",
+    "audio_flile": "chunk_3.mp3",
+    "instructions": [
+      "contact"
+    ],
+    "metadata": {
+      "model": "whisper-medium",
+      "processing_time": "2026-01-01T19:16:07.726573",
+      "segment_start": 0.0,
+      "segment_end": 6.32,
+      "stream_title": "KORF Gnd/Twr/App/Radar"
+    }
+  },
+  {
+    "start_time": "2026-01-01T19:16:06.854669",
+    "end_time": "2026-01-01T19:16:09.374669",
+    "speaker": "Aircraft",
+    "callsign": "United 1178",
+    "message": "United 1178, descend and maintain 4000.",
+    "audio_flile": "chunk_3.mp3",
+    "instructions": [
+      "descend",
+      "maintain"
+    ],
+    "metadata": {
+      "model": "whisper-medium",
+      "processing_time": "2026-01-01T19:16:07.726629",
+      "segment_start": 6.88,
+      "segment_end": 9.4,
+      "stream_title": "KORF Gnd/Twr/App/Radar"
+    }
+  },
+  {
+    "start_time": "2026-01-01T19:16:22.774669",
+    "end_time": "2026-01-01T19:16:23.854669",
+    "speaker": "Unknown",
+    "callsign": null,
+    "message": "Tower, this is",
+    "audio_flile": "chunk_3.mp3",
+    "instructions": [],
+    "metadata": {
+      "model": "whisper-medium",
+      "processing_time": "2026-01-01T19:16:07.726643",
+      "segment_start": 22.8,
+      "segment_end": 23.88,
+      "stream_title": "KORF Gnd/Twr/App/Radar"
+    }
+  },
+  {
+    "start_time": "2026-01-01T19:16:23.854669",
+    "end_time": "2026-01-01T19:16:26.034669",
+    "speaker": "Unknown",
+    "callsign": null,
+    "message": "632 visual runway 5.",
+    "audio_flile": "chunk_3.mp3",
+    "instructions": [],
+    "metadata": {
+      "model": "whisper-medium",
+      "processing_time": "2026-01-01T19:16:07.726655",
+      "segment_start": 23.88,
+      "segment_end": 26.06,
+      "stream_title": "KORF Gnd/Twr/App/Radar"
+    }
+  },
+  {
+    "start_time": "2026-01-01T19:16:27.674669",
+    "end_time": "2026-01-01T19:16:29.794669",
+    "speaker": "Aircraft",
+    "callsign": "check 56",
+    "message": "Please check 56 32 Norfolk.",
+    "audio_flile": "chunk_3.mp3",
+    "instructions": [],
+    "metadata": {
+      "model": "whisper-medium",
+      "processing_time": "2026-01-01T19:16:07.726664",
+      "segment_start": 27.7,
+      "segment_end": 29.82,
+      "stream_title": "KORF Gnd/Twr/App/Radar"
+    }
+  },
+  {
+    "start_time": "2026-01-01T19:16:30.238131",
+    "end_time": "2026-01-01T19:16:33.418131",
+    "speaker": "Aircraft",
+    "callsign": "wind 120",
+    "message": "4th wind 120 at 3, runway 5, cleared to land.",
+    "audio_flile": "chunk_4.mp3",
+    "instructions": [
+      "cleared"
+    ],
+    "metadata": {
+      "model": "whisper-medium",
+      "processing_time": "2026-01-01T19:16:35.887428",
+      "segment_start": 0.0,
+      "segment_end": 3.18,
+      "stream_title": "KORF Gnd/Twr/App/Radar"
+    }
+  },
+  {
+    "start_time": "2026-01-01T19:16:34.158131",
+    "end_time": "2026-01-01T19:16:35.658131",
+    "speaker": "Tower",
+    "callsign": "Lushreak 5632",
+    "message": "Cleared to land, Lushreak 5632.",
+    "audio_flile": "chunk_4.mp3",
+    "instructions": [
+      "cleared"
+    ],
+    "metadata": {
+      "model": "whisper-medium",
+      "processing_time": "2026-01-01T19:16:35.887543",
+      "segment_start": 3.92,
+      "segment_end": 5.42,
+      "stream_title": "KORF Gnd/Twr/App/Radar"
+    }
+  },
+  {
+    "start_time": "2026-01-01T19:16:45.578131",
+    "end_time": "2026-01-01T19:16:59.538131",
+    "speaker": "Aircraft",
+    "callsign": "wind 120",
+    "message": "2nd wind 120 at 3, runway 5, cleared to land.",
+    "audio_flile": "chunk_4.mp3",
+    "instructions": [
+      "cleared"
+    ],
+    "metadata": {
+      "model": "whisper-medium",
+      "processing_time": "2026-01-01T19:16:35.887556",
+      "segment_start": 15.339999999999998,
+      "segment_end": 29.3,
+      "stream_title": "KORF Gnd/Twr/App/Radar"
+    }
+  },
+  {
+    "start_time": "2026-01-01T19:17:49.391339",
+    "end_time": "2026-01-01T19:17:52.571339",
+    "speaker": "Tower",
+    "callsign": "heading 200",
+    "message": "1178, turn right heading 200.",
+    "audio_flile": "chunk_6.mp3",
+    "instructions": [
+      "turn"
+    ],
+    "metadata": {
+      "model": "whisper-medium",
+      "processing_time": "2026-01-01T19:17:32.303516",
+      "segment_start": 19.64,
+      "segment_end": 22.82,
+      "stream_title": "KORF Gnd/Twr/App/Radar"
+    }
+  },
+  {
+    "start_time": "2026-01-01T19:20:01.465068",
+    "end_time": "2026-01-01T19:20:06.185068",
+    "speaker": "Tower",
+    "callsign": "Clementine 5000",
+    "message": "7 Romeo, Norfolk Departure, radar contact, Clementine 5000.",
+    "audio_flile": "chunk_11.mp3",
+    "instructions": [
+      "contact"
+    ],
+    "metadata": {
+      "model": "whisper-medium",
+      "processing_time": "2026-01-01T19:20:04.998751",
+      "segment_start": 0.0,
+      "segment_end": 4.72,
+      "stream_title": "KORF Gnd/Twr/App/Radar"
+    }
+  },
+  {
+    "start_time": "2026-01-01T19:20:11.525068",
+    "end_time": "2026-01-01T19:20:17.865068",
+    "speaker": "Tower",
+    "callsign": "want 4000",
+    "message": "7 Romeo, to keep you right for direction, leave in my airspace, do you want 4000 or 6000?",
+    "audio_flile": "chunk_11.mp3",
+    "instructions": [],
+    "metadata": {
+      "model": "whisper-medium",
+      "processing_time": "2026-01-01T19:20:04.998857",
+      "segment_start": 10.06,
+      "segment_end": 16.4,
+      "stream_title": "KORF Gnd/Twr/App/Radar"
+    }
+  },
+  {
+    "start_time": "2026-01-01T19:20:21.465068",
+    "end_time": "2026-01-01T19:20:23.705068",
+    "speaker": "Tower",
+    "callsign": "Clementine 4000",
+    "message": "7 Romeo, roger, may not see Clementine 4000.",
+    "audio_flile": "chunk_11.mp3",
+    "instructions": [],
+    "metadata": {
+      "model": "whisper-medium",
+      "processing_time": "2026-01-01T19:20:04.998872",
+      "segment_start": 20.0,
+      "segment_end": 22.24,
+      "stream_title": "KORF Gnd/Twr/App/Radar"
+    }
+  },
+  {
+    "start_time": "2026-01-01T19:21:42.976193",
+    "end_time": "2026-01-01T19:21:44.816193",
+    "speaker": "Aircraft",
+    "callsign": "N1R",
+    "message": "N1R left turn to HOKI.",
+    "audio_flile": "chunk_14.mp3",
+    "instructions": [
+      "turn"
+    ],
+    "metadata": {
+      "model": "whisper-medium",
+      "processing_time": "2026-01-01T19:21:35.564259",
+      "segment_start": 11.22,
+      "segment_end": 13.06,
+      "stream_title": "KORF Gnd/Twr/App/Radar"
+    }
+  },
+  {
+    "start_time": "2026-01-01T19:23:09.665171",
+    "end_time": "2026-01-01T19:23:12.965171",
+    "speaker": "Tower",
+    "callsign": "flight 170",
+    "message": "1178, flight 170 to Centennaeum 3000.",
+    "audio_flile": "chunk_17.mp3",
+    "instructions": [],
+    "metadata": {
+      "model": "whisper-medium",
+      "processing_time": "2026-01-01T19:23:07.017047",
+      "segment_start": 7.899999999999999,
+      "segment_end": 11.2,
+      "stream_title": "KORF Gnd/Twr/App/Radar"
+    }
+  },
+  {
+    "start_time": "2026-01-01T19:23:29.765171",
+    "end_time": "2026-01-01T19:23:31.605171",
+    "speaker": "Tower",
+    "callsign": "flight 170",
+    "message": "1178, flight 170 to Centennaeum 3000.",
+    "audio_flile": "chunk_17.mp3",
+    "instructions": [],
+    "metadata": {
+      "model": "whisper-medium",
+      "processing_time": "2026-01-01T19:23:07.017084",
+      "segment_start": 28.0,
+      "segment_end": 29.84,
+      "stream_title": "KORF Gnd/Twr/App/Radar"
+    }
+  },
+  {
+    "start_time": "2026-01-01T19:24:19.273770",
+    "end_time": "2026-01-01T19:24:21.333770",
+    "speaker": "Unknown",
+    "callsign": null,
+    "message": "So, run right may I go ahead?",
+    "audio_flile": "chunk_19.mp3",
+    "instructions": [],
+    "metadata": {
+      "model": "whisper-medium",
+      "processing_time": "2026-01-01T19:24:06.526339",
+      "segment_start": 18.2,
+      "segment_end": 20.26,
+      "stream_title": "KORF Gnd/Twr/App/Radar"
+    }
+  },
+  {
+    "start_time": "2026-01-01T19:24:23.773770",
+    "end_time": "2026-01-01T19:24:27.273770",
+    "speaker": "Aircraft",
+    "callsign": "Eek 5632",
+    "message": "Blue Shear Eek 5632, left turn when able, taxi to Ramsey at Charlie with me.",
+    "audio_flile": "chunk_19.mp3",
+    "instructions": [
+      "turn",
+      "taxi"
+    ],
+    "metadata": {
+      "model": "whisper-medium",
+      "processing_time": "2026-01-01T19:24:06.526384",
+      "segment_start": 22.7,
+      "segment_end": 26.2,
+      "stream_title": "KORF Gnd/Twr/App/Radar"
+    }
+  },
+  {
+    "start_time": "2026-01-01T19:24:27.753770",
+    "end_time": "2026-01-01T19:24:29.833770",
+    "speaker": "Tower",
+    "callsign": "Shear 5632",
+    "message": "Left Charlie with you, Blue Shear 5632.",
+    "audio_flile": "chunk_19.mp3",
+    "instructions": [],
+    "metadata": {
+      "model": "whisper-medium",
+      "processing_time": "2026-01-01T19:24:06.526403",
+      "segment_start": 26.68,
+      "segment_end": 28.76,
+      "stream_title": "KORF Gnd/Twr/App/Radar"
+    }
+  },
+  {
+    "start_time": "2026-01-01T19:24:50.755853",
+    "end_time": "2026-01-01T19:24:52.155853",
+    "speaker": "Unknown",
+    "callsign": null,
+    "message": ".",
+    "audio_flile": "chunk_20.mp3",
+    "instructions": [],
+    "metadata": {
+      "model": "whisper-medium",
+      "processing_time": "2026-01-01T19:24:33.259105",
+      "segment_start": 20.82,
+      "segment_end": 22.22,
+      "stream_title": "KORF Gnd/Twr/App/Radar"
+    }
+  }
+]

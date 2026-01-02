@@ -1,0 +1,94 @@
+version: '3.8'
+
+services:
+  atc-transcription:
+    container_name: atc
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./recordings:/app/recordings
+      - ./.env:/.env
+    environment:
+      - HOST=0.0.0.0
+      - PORT=8000
+      - OMP_NUM_THREADS=1
+      - MKL_NUM_THREADS=1
+      - NUMEXPR_NUM_THREADS=1
+    restart: unless-stopped
+    shm_size: '4gb'
+    mem_limit: 16g
+    memswap_limit: 16g
+    healthcheck:
+      test: ["CMD", "python", "-c", "import requests; requests.get('http://localhost:8000/health')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    networks:
+      - atc-network
+
+  aircraft:
+    image: docker.elastic.co/logstash/logstash:9.1.4
+    container_name: aircraft
+    volumes:
+      - ./logstash/pipeline:/usr/share/logstash/pipeline:ro
+      - ./.env:/.env:ro
+    environment:
+      - ELASTICSEARCH_ENDPOINT=${ELASTICSEARCH_ENDPOINT}
+      - ELASTICSEARCH_API_KEY=${ELASTICSEARCH_API_KEY}
+      - AIRCRAFT_API_BASE_URL=${AIRCRAFT_QUERY_URL}
+      - ATC_LAT=${ATC_LAT}
+      - ATC_LON=${ATC_LON}
+      - ATC_RADIUS_NM=${ATC_RADIUS_NM}
+      - AIRCRAFT_INDEX=${AIRCRAFT_INDEX}
+      - "LS_JAVA_OPTS=-Xmx512m -Xms512m"
+      - "xpack.monitoring.enabled=false"
+      - "xpack.management.enabled=false"
+    restart: unless-stopped
+    depends_on:
+      - atc-transcription
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9600"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    networks:
+      - atc-network
+
+  web-ui:
+    build:
+      context: ./web-ui
+      dockerfile: Dockerfile
+    container_name: atc-web-ui
+    ports:
+      - "3000:3000"
+    environment:
+      - ELASTICSEARCH_ENDPOINT=${ELASTICSEARCH_ENDPOINT}
+      - ELASTICSEARCH_API_KEY=${ELASTICSEARCH_API_KEY}
+      - ELASTICSEARCH_INDEX=${ELASTICSEARCH_INDEX}
+      - AIRCRAFT_INDEX=${AIRCRAFT_INDEX}
+      - ELSER_MODEL_ID=${ELSER_MODEL_ID}
+      - ATC_SERVER_URL=http://atc:8000
+      - ATC_LAT=${ATC_LAT}
+      - ATC_LON=${ATC_LON}
+      - WEB_UI_PORT=3000
+    restart: unless-stopped
+    depends_on:
+      - atc-transcription
+      - aircraft
+    healthcheck:
+      test: ["CMD", "node", "-e", "require('http').get('http://localhost:3000/health', (r) => {process.exit(r.statusCode === 200 ? 0 : 1)})"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 15s
+    networks:
+      - atc-network
+
+networks:
+  atc-network:
+    driver: bridge

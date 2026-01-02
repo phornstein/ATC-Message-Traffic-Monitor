@@ -1,0 +1,16 @@
+# Setup-only requirements for deploying models
+# Use: pip install -r requirements-setup.txt
+
+# Elasticsearch client
+elasticsearch==8.11.1
+
+# Environment variables
+python-dotenv==1.0.0
+
+# Eland for ML model deployment (requires older torch)
+eland[pytorch]==8.11.0
+transformers==4.35.0
+sentence-transformers==2.2.2
+
+# NumPy constrained by eland
+numpy==1.23.5
