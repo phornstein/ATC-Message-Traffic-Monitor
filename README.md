@@ -23,7 +23,7 @@ Edit `.env` and set:
 - `ELASTICSEARCH_ENDPOINT` - Your Elasticsearch cluster URL
 - `ELASTICSEARCH_API_KEY` - Your Elasticsearch API key
 - `ELASTICSEARCH_INDEX` - Index name for transcriptions (default: atc-transcriptions)
-- `AIRCRAFT_INDEX` - Index name for aircraft data (default: atc-aircraft)
+- `AIRCRAFT_INDEX` - Base name for aircraft data stream (default: atc-aircraft). The full data stream name will be `logs-{AIRCRAFT_INDEX}-default` using logsdb mode.
 - `ATC_LAT`, `ATC_LON`, `ATC_RADIUS_NM` - Location and radius for aircraft tracking
 - `STREAM_URL` - URL of the ATC audio stream
 - `ELSER_MODEL_ID` - ELSER model ID (default: elser_2)
@@ -44,7 +44,7 @@ pip install -r requirements-setup.txt
 python setup.py
 ```
 
-**Note:** The setup script uses `requirements-setup.txt` which includes eland for model deployment. The Docker containers use `requirements.txt` which doesn't include eland to avoid dependency conflicts with Whisper.
+**Note:** The setup script uses `requirements-setup.txt` which includes eland for model deployment. The Docker containers use `transcription-server/requirements.txt` which doesn't include eland to avoid dependency conflicts with Whisper.
 
 ### 3. Start Docker Containers
 
@@ -53,9 +53,11 @@ docker-compose up -d
 ```
 
 This will start:
-- **atc-transcription**: Whisper transcription service
-- **aircraft**: Logstash pipeline for aircraft tracking
-- **web-ui**: Web interface for viewing data
+- **atc-transcription**: Whisper transcription service (from `transcription-server/`)
+- **atc-aircraft**: Logstash pipeline for aircraft tracking (from `logstash/`)
+- **web-ui**: Web interface for viewing data (from `web-ui/`)
+
+**Note:** The Whisper model is cached in a Docker volume (`huggingface-cache`). On first run, it will download the model (~3GB). Subsequent container restarts will use the cached model.
 
 ### 4. Access the Web UI
 
@@ -71,6 +73,8 @@ Open your browser to: http://localhost:3000
 
 ### Aircraft Tracking
 - Real-time aircraft positions from ADS-B data
+- Uses Elasticsearch data streams with logsdb mode for optimized time-series storage
+- Data stream naming: `logs-{AIRCRAFT_INDEX}-default`
 - Geo-point mapping for location queries
 - Historical track playback
 
@@ -96,7 +100,7 @@ eland_import_hub_model \
 ## Troubleshooting
 
 ### Docker Build Fails
-Make sure you're using the correct requirements file. The Docker containers should use `requirements.txt` (without eland).
+Make sure you're using the correct requirements file. The transcription server uses `transcription-server/requirements.txt` (without eland).
 
 ### Setup Script Fails
 - Ensure you have Python 3.11+
@@ -109,6 +113,30 @@ The model download can take 10+ minutes. You can:
 2. Deploy manually using the `eland_import_hub_model` command above
 3. Skip NER deployment and use only ELSER for semantic search
 
+## Project Structure
+
+```
+ATC Voice to Text/
+├── transcription-server/       # Python transcription service
+│   ├── app.py                  # Main server application
+│   ├── Dockerfile
+│   ├── requirements.txt
+│   └── recordings/             # Audio chunk storage
+├── logstash/                   # Aircraft tracking
+│   └── pipeline/
+│       └── aircraft.conf
+├── web-ui/                     # Node.js frontend
+│   ├── server.js
+│   ├── Dockerfile
+│   ├── package.json
+│   └── public/
+├── setup.py                    # Elasticsearch setup
+├── requirements-setup.txt      # Setup dependencies
+├── docker-compose.yml
+├── .env
+└── .env.example
+```
+
 ## Architecture
 
 ```
@@ -119,7 +147,7 @@ The model download can take 10+ minutes. You can:
          ▼
 ┌─────────────────┐
 │  Whisper AI     │◄── Transcription Service
-│  (Docker)       │
+│  (Docker)       │    (transcription-server/)
 └────────┬────────┘
          │
          ▼

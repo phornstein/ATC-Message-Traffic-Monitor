@@ -163,18 +163,19 @@ def setup_transcription_index(es, pipeline_name):
 
 
 def setup_aircraft_template(es):
-    """Create index template for aircraft data stream"""
+    """Create index template for aircraft data stream using logsdb"""
     aircraft_index = os.getenv('AIRCRAFT_INDEX', 'atc-aircraft')
-    template_name = f"{aircraft_index}-template"
+    template_name = f"logs-{aircraft_index}-template"
 
     index_template = {
-        "index_patterns": [f"atc-aircraft-*"],
+        "index_patterns": [f"logs-{aircraft_index}-*"],
         "data_stream": {},
         "priority": 500,
         "template": {
             "settings": {
                 "number_of_shards": 1,
-                "number_of_replicas": 1
+                "number_of_replicas": 1,
+                "mode": "logsdb"
             },
             "mappings": {
                 "properties": {
@@ -360,7 +361,7 @@ def main():
     try:
         setup_aircraft_template(es)
         aircraft_index = os.getenv('AIRCRAFT_INDEX', 'atc-aircraft')
-        print(f"  Data will be written to: {aircraft_index}")
+        print(f"  Data will be written to: logs-{aircraft_index}-default")
     except:
         print("ERROR setting up aircraft data stream")
 

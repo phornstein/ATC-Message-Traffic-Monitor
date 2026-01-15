@@ -1,0 +1,629 @@
+/* Base Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;
+    overflow: hidden;
+}
+
+body {
+    font-family: 'Courier New', monospace;
+    background-color: #1a1a1a;
+    color: #00ff00;
+}
+
+/* Layout */
+.container {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    grid-template-rows: auto 1fr;
+    height: 100%;
+    gap: 2px;
+    padding: 2px;
+    overflow: hidden;
+}
+
+/* Header */
+.header {
+    grid-column: 1 / -1;
+    background-color: #2a2a2a;
+    padding: 15px;
+    border: 2px solid #00ff00;
+    box-shadow: 0 0 10px #00ff00;
+}
+
+.header h1 {
+    text-align: center;
+    font-size: 24px;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    text-shadow: 0 0 10px #00ff00;
+}
+
+.status {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 10px;
+    font-size: 12px;
+}
+
+.status-item {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-weight: bold;
+}
+
+.status-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: #00ff00;
+    box-shadow: 0 0 5px #00ff00;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+
+/* Map Container */
+.map-container {
+    background-color: #2a2a2a;
+    border: 2px solid #00ff00;
+    position: relative;
+    overflow: hidden;
+    box-shadow: inset 0 0 20px rgba(0, 255, 0, 0.2);
+}
+
+#map {
+    height: 100%;
+    width: 100%;
+    background-color: #1a1a1a;
+}
+
+/* Messages Panel */
+.messages-panel {
+    background-color: #2a2a2a;
+    border: 2px solid #00ff00;
+    display: flex;
+    flex-direction: column;
+    box-shadow: inset 0 0 20px rgba(0, 255, 0, 0.2);
+    min-height: 0;
+    overflow: hidden;
+}
+
+.messages-header {
+    padding: 10px;
+    border-bottom: 2px solid #00ff00;
+    text-align: center;
+    font-size: 14px;
+    text-transform: uppercase;
+    background-color: #1a1a1a;
+}
+
+/* Search */
+.search-container {
+    padding: 10px;
+    background-color: #1a1a1a;
+    border-bottom: 2px solid #00ff00;
+}
+
+.search-input {
+    width: 100%;
+    background-color: #2a2a2a;
+    border: 1px solid #00ff00;
+    color: #00ff00;
+    padding: 8px 12px;
+    font-family: 'Courier New', monospace;
+    font-size: 12px;
+    box-shadow: inset 0 0 5px rgba(0, 255, 0, 0.2);
+}
+
+.search-input:focus {
+    outline: none;
+    box-shadow: 0 0 10px #00ff00;
+}
+
+.search-input::placeholder {
+    color: #006600;
+}
+
+/* Time Controls */
+.time-controls {
+    padding: 10px;
+    background-color: #1a1a1a;
+    border-bottom: 2px solid #00ff00;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.time-slider-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.time-slider {
+    flex: 1;
+    -webkit-appearance: none;
+    appearance: none;
+    height: 6px;
+    background: #2a2a2a;
+    border: 1px solid #00ff00;
+    outline: none;
+}
+
+.time-slider::-webkit-slider-thumb,
+.time-slider::-moz-range-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    background: #00ff00;
+    cursor: pointer;
+    border-radius: 50%;
+    box-shadow: 0 0 10px #00ff00;
+    border: none;
+}
+
+.time-display {
+    font-size: 11px;
+    color: #00aa00;
+    text-align: center;
+}
+
+/* Mode Controls */
+.mode-controls {
+    display: flex;
+    gap: 5px;
+}
+
+.mode-btn {
+    flex: 1;
+    background-color: #2a2a2a;
+    border: 1px solid #00ff00;
+    color: #00ff00;
+    padding: 8px;
+    font-family: 'Courier New', monospace;
+    font-size: 11px;
+    cursor: pointer;
+    text-transform: uppercase;
+    transition: all 0.3s;
+}
+
+.mode-btn:hover,
+.mode-btn.active {
+    background-color: #00ff00;
+    color: #1a1a1a;
+    box-shadow: 0 0 10px #00ff00;
+}
+
+.mode-btn.active {
+    font-weight: bold;
+}
+
+.mode-indicator {
+    text-align: center;
+    font-size: 10px;
+    padding: 5px;
+    background-color: rgba(0, 255, 0, 0.1);
+    border-radius: 3px;
+}
+
+.mode-indicator.live {
+    animation: pulse 2s infinite;
+}
+
+/* Messages Content */
+.messages-content {
+    flex: 1 1 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 10px;
+    font-size: 12px;
+    line-height: 1.6;
+    min-height: 0;
+}
+
+.message-item {
+    margin-bottom: 15px;
+    padding: 10px;
+    background-color: rgba(0, 255, 0, 0.05);
+    border-left: 3px solid #00ff00;
+    animation: messageIn 0.3s ease-out;
+}
+
+@keyframes messageIn {
+    from {
+        opacity: 0;
+        transform: translateX(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.message-time {
+    color: #00aa00;
+    font-size: 10px;
+}
+
+.message-speaker {
+    color: #00ff00;
+    font-weight: bold;
+    margin-top: 5px;
+}
+
+.message-callsign {
+    color: #00cc00;
+}
+
+.message-text {
+    margin-top: 5px;
+    color: #00dd00;
+}
+
+/* Audio Controls */
+.message-audio {
+    margin-top: 8px;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+/* Instruction Badges */
+.instruction-badge {
+    display: inline-block;
+    background-color: #4a4a4a;
+    color: #cccccc;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.audio-btn {
+    background-color: rgba(0, 255, 0, 0.1);
+    border: 1px solid #00ff00;
+    color: #00ff00;
+    padding: 4px 10px;
+    font-family: 'Courier New', monospace;
+    font-size: 10px;
+    cursor: pointer;
+    text-transform: uppercase;
+    transition: all 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.audio-btn:hover {
+    background-color: #00ff00;
+    color: #1a1a1a;
+    box-shadow: 0 0 8px #00ff00;
+}
+
+.audio-btn:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+}
+
+.audio-btn.playing {
+    background-color: #00ff00;
+    color: #1a1a1a;
+    animation: pulse 1s infinite;
+}
+
+/* Custom scrollbar */
+.messages-content::-webkit-scrollbar {
+    width: 8px;
+}
+
+.messages-content::-webkit-scrollbar-track {
+    background: #1a1a1a;
+}
+
+.messages-content::-webkit-scrollbar-thumb {
+    background: #00ff00;
+    box-shadow: 0 0 5px #00ff00;
+}
+
+/* Leaflet Overrides */
+.leaflet-container {
+    background-color: #1a1a1a !important;
+}
+
+.leaflet-popup-content-wrapper {
+    background-color: #2a2a2a;
+    color: #00ff00;
+    border: 1px solid #00ff00;
+    box-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
+}
+
+.leaflet-popup-tip {
+    background-color: #2a2a2a;
+}
+
+.leaflet-bar a {
+    background-color: #1a1a1a;
+    border-bottom: 1px solid #ccc;
+    width: 26px;
+    height: 26px;
+    line-height: 26px;
+    display: block;
+    text-align: center;
+    text-decoration: none;
+    color: #03ff00;
+    outline: thin solid #03ff00;
+}
+
+/* Map Markers */
+.aircraft-icon {
+    width: 30px;
+    height: 30px;
+    text-align: center;
+    line-height: 30px;
+    color: #00ff00;
+    font-size: 20px;
+    text-shadow: 0 0 5px #00ff00;
+}
+
+.tower-marker {
+    width: 40px;
+    height: 40px;
+    text-align: center;
+    line-height: 40px;
+    font-size: 30px;
+    text-shadow: 0 0 10px #00ff00;
+    animation: pulse 2s infinite;
+}
+
+.aircraft-popup,
+.tower-popup {
+    font-family: 'Courier New', monospace;
+    font-size: 11px;
+}
+
+.aircraft-popup strong {
+    background-color: #2a2a2aca;
+    color: #00ff00;
+}
+
+.tower-popup strong {
+    color: #00ff00;
+}
+
+.airplane-icon {
+    width: 20px;
+    height: 20px;
+    font-size: 20px;
+    line-height: 20px;
+    text-align: center;
+    transform-origin: center;
+}
+
+/* Aircraft Labels */
+.aircraft-label-container {
+    background: transparent;
+    border: none;
+}
+
+.aircraft-label {
+    display: flex;
+    flex-direction: column;
+    font-family: 'Courier New', monospace;
+    font-size: 9px;
+    line-height: 1.2;
+    color: #ffffff;
+    background-color: rgba(0, 0, 0, 0.75);
+    padding: 2px 4px;
+    border-radius: 2px;
+    border: 1px solid rgba(0, 255, 0, 0.5);
+    white-space: nowrap;
+    text-shadow: 1px 1px 1px #000000;
+    pointer-events: none;
+}
+
+.aircraft-label span:first-child {
+    color: #00ff00;
+    font-weight: bold;
+}
+
+.aircraft-label span:last-child {
+    color: #cccccc;
+}
+
+/* ATC Time Slider */
+.atc-time-slider {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(26, 26, 26, 0.95);
+    border-top: 2px solid #00ff00;
+    box-shadow: 0 -5px 20px rgba(0, 255, 0, 0.3);
+    z-index: 1000;
+    font-family: 'Courier New', monospace;
+    padding: 10px 15px;
+}
+
+.atc-time-slider.hidden {
+    display: none;
+}
+
+.atc-slider-controls {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    gap: 10px;
+}
+
+.atc-slider-playback {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.atc-slider-btn {
+    background-color: #2a2a2a;
+    border: 1px solid #00ff00;
+    color: #00ff00;
+    padding: 6px 10px;
+    font-family: 'Courier New', monospace;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+    min-width: 36px;
+    text-align: center;
+}
+
+.atc-slider-btn:hover {
+    background-color: #00ff00;
+    color: #1a1a1a;
+    box-shadow: 0 0 10px #00ff00;
+}
+
+.atc-slider-btn.active {
+    background-color: #00ff00;
+    color: #1a1a1a;
+}
+
+.atc-slider-btn:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+}
+
+.atc-slider-info {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    font-size: 11px;
+    color: #00ff00;
+}
+
+.atc-slider-time-display {
+    background-color: #1a1a1a;
+    border: 1px solid #00ff00;
+    padding: 5px 10px;
+    min-width: 280px;
+    text-align: center;
+}
+
+.atc-slider-speed {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.atc-slider-speed select {
+    background-color: #2a2a2a;
+    border: 1px solid #00ff00;
+    color: #00ff00;
+    padding: 5px 8px;
+    font-family: 'Courier New', monospace;
+    font-size: 11px;
+    cursor: pointer;
+}
+
+.atc-slider-speed select:focus {
+    outline: none;
+    box-shadow: 0 0 5px #00ff00;
+}
+
+.atc-slider-track-container {
+    position: relative;
+    height: 40px;
+    margin-bottom: 5px;
+}
+
+.atc-slider-track {
+    position: absolute;
+    top: 10px;
+    left: 0;
+    right: 0;
+    height: 20px;
+    background-color: #1a1a1a;
+    border: 1px solid #00ff00;
+    display: flex;
+    overflow: hidden;
+}
+
+.density-bar {
+    height: 100%;
+    flex-shrink: 0;
+}
+
+.density-bar.has-data {
+    background-color: rgba(0, 255, 0, 0.4);
+}
+
+.density-bar.no-data {
+    background-color: rgba(0, 0, 0, 0.6);
+}
+
+.atc-slider-window {
+    position: absolute;
+    top: 5px;
+    height: 30px;
+    background-color: rgba(0, 255, 0, 0.2);
+    border: 2px solid #00ff00;
+    box-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
+    cursor: grab;
+    z-index: 10;
+}
+
+.atc-slider-window:active {
+    cursor: grabbing;
+}
+
+.atc-slider-handle {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 10px;
+    background-color: #00ff00;
+    cursor: ew-resize;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    color: #1a1a1a;
+}
+
+.atc-slider-handle.left {
+    left: -1px;
+    border-radius: 3px 0 0 3px;
+}
+
+.atc-slider-handle.right {
+    right: -1px;
+    border-radius: 0 3px 3px 0;
+}
+
+.atc-slider-handle:hover {
+    background-color: #00cc00;
+    box-shadow: 0 0 8px #00ff00;
+}
+
+.atc-slider-labels {
+    display: flex;
+    justify-content: space-between;
+    font-size: 9px;
+    color: #00aa00;
+    padding: 0 5px;
+}
+
+.atc-slider-label {
+    text-align: center;
+}

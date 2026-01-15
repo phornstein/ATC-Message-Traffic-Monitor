@@ -3,6 +3,9 @@ FROM python:3.11-slim
 # Set working directory
 WORKDIR /app
 
+# Set HuggingFace cache directory for model persistence
+ENV HF_HOME=/root/.cache/huggingface
+
 # Install system dependencies including ffmpeg
 RUN apt-get update && apt-get install -y \
     ffmpeg \

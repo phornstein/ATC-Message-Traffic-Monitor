@@ -4,12 +4,12 @@ services:
   atc-transcription:
     container_name: atc
     build:
-      context: .
+      context: ./transcription-server
       dockerfile: Dockerfile
     ports:
       - "8000:8000"
     volumes:
-      - ./recordings:/app/recordings
+      - ./transcription-server/recordings:/app/recordings
       - ./.env:/.env
     environment:
       - HOST=0.0.0.0
@@ -30,9 +30,9 @@ services:
     networks:
       - atc-network
 
-  aircraft:
+  atc-aircraft:
     image: docker.elastic.co/logstash/logstash:9.1.4
-    container_name: aircraft
+    container_name: atc-aircraft
     volumes:
       - ./logstash/pipeline:/usr/share/logstash/pipeline:ro
       - ./.env:/.env:ro
@@ -79,7 +79,7 @@ services:
     restart: unless-stopped
     depends_on:
       - atc-transcription
-      - aircraft
+      - atc-aircraft
     healthcheck:
       test: ["CMD", "node", "-e", "require('http').get('http://localhost:3000/health', (r) => {process.exit(r.statusCode === 200 ? 0 : 1)})"]
       interval: 30s

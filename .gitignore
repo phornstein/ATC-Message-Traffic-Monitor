@@ -1,3 +1,4 @@
 .env
-recordings/*
+transcription-server/recordings/*
 atc_ai.ipynb
+.gitignore
