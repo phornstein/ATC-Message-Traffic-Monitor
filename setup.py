@@ -25,7 +25,8 @@ def get_es_client():
 
     es = Elasticsearch(
         es_endpoint,
-        api_key=es_api_key
+        api_key=es_api_key,
+        verify_certs=False
     )
 
     if not es.ping():

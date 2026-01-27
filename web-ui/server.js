@@ -10,7 +10,7 @@ const port = process.env.WEB_UI_PORT || 3000;
 const esClient = new Client({
     node: process.env.ELASTICSEARCH_ENDPOINT,
     auth: { apiKey: process.env.ELASTICSEARCH_API_KEY },
-    tls: { rejectUnauthorized: true }
+    tls: { rejectUnauthorized: false }
 });
 
 // Index names

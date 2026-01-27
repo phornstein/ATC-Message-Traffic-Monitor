@@ -205,7 +205,7 @@ def setup_elasticsearch():
         return False
 
     try:
-        es_client = Elasticsearch(Config.ES_ENDPOINT, api_key=Config.ES_API_KEY)
+        es_client = Elasticsearch(Config.ES_ENDPOINT, api_key=Config.ES_API_KEY, verify_certs=False)
         if not es_client.ping():
             logger.error("Could not connect to Elasticsearch")
             return False
