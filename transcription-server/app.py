@@ -284,9 +284,22 @@ def thread_stream_reader():
     logger.info("Starting stream reader...")
 
     try:
-        playlist_response = requests.get(Config.ATC_PLAYLIST_URL, timeout=10, headers=headers)
-        stream_urls = re.findall(r'File\d+=(.+?)(?:\n|$)', playlist_response.text)
-        stream_title = re.findall(r'Title\d+=(.+?)(?:\n|$)', playlist_response.text)
+        if Config.ATC_PLAYLIST_URL.endswith('.pls'):
+            logger.info(f"Fetching PLS playlist from {Config.ATC_PLAYLIST_URL}")
+            pls_response = requests.get(Config.ATC_PLAYLIST_URL, timeout=10, headers=headers)
+            stream_urls = re.findall(r'File1=(.+?)(?:\n|$)', pls_response.text)
+            stream_title = re.findall(r'Title1=(.+?)(?:\n|$)', pls_response.text)
+
+            if not stream_urls:
+                logger.error("Could not find stream URL in PLS")
+                return
+
+            audio_url = stream_urls[0].strip()
+            logger.info(f"Found stream: {audio_url}")
+        else:
+            logger.info(f"Using direct stream URL: {Config.ATC_PLAYLIST_URL}")
+            stream_urls = [Config.ATC_PLAYLIST_URL]
+            stream_title = Config.ATC_PLAYLIST_URL.split('/')[-1]
 
         if not stream_urls:
             logger.error("Could not find stream URL")

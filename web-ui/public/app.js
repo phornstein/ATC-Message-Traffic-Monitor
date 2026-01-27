@@ -582,6 +582,7 @@ async function fetchMessages() {
             response = await fetch(buildUrl('/api/messages'));
         }
         const data = await response.json();
+        console.log(data);
         updateMessagesDisplay(data);
         getEl('message-count').textContent = data.length;
     } catch (error) {
